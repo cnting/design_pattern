@@ -65,28 +65,61 @@ public class BeanDefinition {
         private Class type;
         private Object arg;
 
-        public boolean isRef() {
-            return isRef;
+        private ConstructorArg(Builder builder) {
+            this.isRef = builder.isRef;
+            this.type = builder.type;
+            this.arg = builder.arg;
         }
 
-        public void setRef(boolean ref) {
-            isRef = ref;
+        public boolean isRef() {
+            return isRef;
         }
 
         public Class getType() {
             return type;
         }
 
-        public void setType(Class type) {
-            this.type = type;
-        }
 
         public Object getArg() {
             return arg;
         }
 
-        public void setArg(Object arg) {
-            this.arg = arg;
+
+        public static class Builder {
+            private boolean isRef;
+            private Class type;
+            private Object arg;
+
+            public Builder setIsRef(boolean isRef) {
+                this.isRef = isRef;
+                return this;
+            }
+
+            public Builder setType(Class type) {
+                this.type = type;
+                return this;
+            }
+
+            public Builder setArg(Object arg) {
+                this.arg = arg;
+                return this;
+            }
+
+            public ConstructorArg build() {
+                if (isRef) {
+                    if (type != null) {
+                        throw new IllegalArgumentException("");
+                    }
+                    if (arg != null && arg.getClass() != String.class) {
+                        throw new IllegalArgumentException("");
+                    }
+                } else {
+                    if (arg == null || type == null) {
+                        throw new IllegalArgumentException("");
+                    }
+                }
+                return new ConstructorArg(this);
+            }
         }
     }
 }
