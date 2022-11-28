@@ -14,7 +14,7 @@ public class TimeoutAlertHandler extends AlertHandler {
     public void check(ApiStatInfo apiStatInfo) {
         long timeoutTps = apiStatInfo.getTimeoutCount() / apiStatInfo.getDurationOfSeconds();
         if (timeoutTps > rule.getMatchedRule(apiStatInfo.getApi()).getMaxTimeoutTps()) {
-            notification.notify(NotificationEmergencyLevel.URGENCY, "...");
+            notification.notify("...");
         }
     }
 }
